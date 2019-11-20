@@ -25,6 +25,7 @@ def module_path():
     """
     This will get us the program's directory
     """
+
     return os.path.dirname(os.path.realpath(__file__))
 
 
