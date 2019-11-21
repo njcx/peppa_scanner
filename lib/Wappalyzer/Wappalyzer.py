@@ -63,18 +63,16 @@ class WebPage(object):
         }
 
     @classmethod
-    def new_from_url(cls, url, verify=True):
+    def new_from_url(cls, url, header=None, verify=True):
         """
-        Constructs a new WebPage object for the URL,
-        using the `requests` module to fetch the HTML.
 
-        Parameters
-        ----------
-
-        url : str
-        verify: bool
         """
-        response = requests.get(url, verify=verify, timeout=2.5)
+
+        if not header:
+            header = {'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) '
+                                    'AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.15 Safari/537.36'}
+
+        response = requests.get(url, headers=header, verify=verify, timeout=2.5)
         return cls.new_from_response(response)
 
     @classmethod

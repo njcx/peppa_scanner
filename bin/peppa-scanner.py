@@ -9,7 +9,7 @@ import argparse
 pwd = os.path.abspath(os.path.dirname(__file__))
 sys.path.append(os.path.abspath(os.path.dirname(pwd) + os.path.sep + "lib"))
 from pyfiglet import Figlet
-from Wappalyzer.Wappalyzer import Wappalyzer, WebPage
+from peppa_utils.color_print import ColorPrint
 
 
 def banner():
@@ -61,8 +61,12 @@ def parse_options():
 
 if __name__ == "__main__":
 
+    color_print = ColorPrint()
+
     banner()
     parse_options()
-    wappalyzer = Wappalyzer()
-    webpage = WebPage.new_from_url('https://www.runoob.com/')
-    print(wappalyzer.analyze_with_categories(webpage))
+
+
+
+
+
