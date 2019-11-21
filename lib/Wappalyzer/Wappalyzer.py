@@ -96,7 +96,7 @@ class Wappalyzer(object):
     Python Wappalyzer driver.
     """
 
-    def __init__(self, categories, apps):
+    def __init__(self):
         """
         Initialize a new Wappalyzer instance.
 
@@ -108,25 +108,19 @@ class Wappalyzer(object):
         apps : dict
             Map of app names to app dicts, as in apps.json.
         """
-        self.categories = categories
-        self.apps = apps
+        self.latest()
 
         for name, app in self.apps.items():
             self._prepare_app(app)
 
-    @classmethod
-    def latest(cls, apps_file=None):
+    def latest(self):
         """
         Construct a Wappalyzer instance using a apps db path passed in via
         apps_file, or alternatively the default in data/apps.json
         """
-        if apps_file:
-            with open(apps_file, 'r') as fd:
-                obj = json.load(fd)
-        else:
-            obj = json.loads(pkg_resources.resource_string(__name__, "data/apps.json"))
-
-        return cls(categories=obj['categories'], apps=obj['apps'])
+        obj = json.loads(pkg_resources.resource_string(__name__, "data/apps.json"))
+        self.categories = obj['categories']
+        self.apps = obj['apps']
 
     def _prepare_app(self, app):
         """
@@ -246,7 +240,8 @@ class Wappalyzer(object):
         Returns a list of the categories for an app name.
         """
         cat_nums = self.apps.get(app_name, {}).get("cats", [])
-        cat_names = [self.categories.get("%s" % cat_num, "")
+
+        cat_names = [self.categories.get("%s" % cat_num, "").get("name", "")
                      for cat_num in cat_nums]
 
         return cat_names
@@ -274,6 +269,15 @@ class Wappalyzer(object):
 
         for app_name in detected_apps:
             cat_names = self.get_categories(app_name)
-            categorised_apps[app_name] = {"categories": cat_names}
-
+            for cat_name in cat_names:
+                categorised_apps[cat_name] = app_name#{"categories": cat_names}
         return categorised_apps
+
+
+
+
+
+
+
+
+

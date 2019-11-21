@@ -7,6 +7,7 @@ import os
 import argparse
 sys.path.append(os.path.abspath(os.path.dirname(os.getcwd()) + os.path.sep + "lib"))
 from pyfiglet import Figlet
+from Wappalyzer.Wappalyzer import Wappalyzer, WebPage
 
 
 def banner():
@@ -57,8 +58,11 @@ def parse_options():
 
 
 if __name__ == "__main__":
-    banner()
 
+    banner()
     parse_options()
+    wappalyzer = Wappalyzer()
+    webpage = WebPage.new_from_url('https://www.runoob.com/')
+    print(wappalyzer.analyze_with_categories(webpage))
 
 
