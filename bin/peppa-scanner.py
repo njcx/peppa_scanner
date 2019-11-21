@@ -2,10 +2,12 @@
 # @Author  : nJcx
 # @Email   : njcx86@gmail.com
 # @File    : peppa-scanner.py
+
 import sys
 import os
 import argparse
-sys.path.append(os.path.abspath(os.path.dirname(os.getcwd()) + os.path.sep + "lib"))
+pwd = os.path.abspath(os.path.dirname(__file__))
+sys.path.append(os.path.abspath(os.path.dirname(pwd) + os.path.sep + "lib"))
 from pyfiglet import Figlet
 from Wappalyzer.Wappalyzer import Wappalyzer, WebPage
 
@@ -64,5 +66,3 @@ if __name__ == "__main__":
     wappalyzer = Wappalyzer()
     webpage = WebPage.new_from_url('https://www.runoob.com/')
     print(wappalyzer.analyze_with_categories(webpage))
-
-
